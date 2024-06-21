@@ -364,6 +364,9 @@ def export_pytorch(
                 output_names = list(config.outputs.keys())
                 input_info = get_input_shapes(dummy_inputs, inputs)
 
+                if getattr(model.config, "torch_dtype", torch.float16) in [torch.float16, torch.bfloat16]:
+                    from openvino.frontend.pytorch import patch_model
+                    patch_model.__make_16bit_traceable(model)
                 ov_model = convert_model(model, example_input=dummy_inputs, input=input_info)
 
         except Exception as ex:

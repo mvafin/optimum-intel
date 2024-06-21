@@ -206,7 +206,7 @@ def main_export(
 
     do_gptq_patching = False
     custom_architecture = False
-    loading_kwargs = {}
+    loading_kwargs = {"torch_dtype": "auto"}
     if library_name == "transformers":
         config = AutoConfig.from_pretrained(
             model_name_or_path,
